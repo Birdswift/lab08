@@ -14,5 +14,10 @@ jobs:
 
       - name: Build
         run: |
-          sudo docker build -t myapp .
-          sudo docker run myapp
+          sudo docker build -t myapp1 ./server
+          sudo docker run myapp1
+           - name: Build
+      - name: Build
+        run: |
+          sudo docker build -t myapp2 ./client
+          sudo docker run myapp2
