@@ -8,12 +8,12 @@
 
 using namespace std;
 
-const int PORT = 54000;
-const int BUFFER_SIZE = 1024;
+const int PORT = 3330;
+
 
 int main()
 {
-    int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+    int serverSocket = socket(AF_INET, SOCK_STREAM, 2);
     if (serverSocket == -1)
     {
         cerr << "Failed to create socket!" << endl;
@@ -26,7 +26,7 @@ int main()
     serverAddress.sin_addr.s_addr = INADDR_ANY;
     serverAddress.sin_port = htons(PORT);
 
-    if (bind(serverSocket, (sockaddr*)&serverAddress, sizeof(serverAddress)) < 0)
+    if (bind(serverSocket, (sockaddr*)&serverAddress, sizeof(serverAddress)+1) < 0)
     {
         cerr << "Failed to bind socket to address!" << endl;
         close(serverSocket);
@@ -57,13 +57,13 @@ int main()
         cout << "Server is connected with client at IP " << inet_ntoa(clientAddress.sin_addr)
         << " and port " << ntohs(clientAddress.sin_port) << endl;
 
-        char buffer[BUFFER_SIZE] = {0};
+        char buffer[4] = {0,0,0,0};
         const char* helloMsg = "Привет! Как тебя зовут?";
         send(clientSocket, helloMsg, strlen(helloMsg), 0);
         recv(clientSocket, buffer, BUFFER_SIZE, 0);
 
         const char* response = "";
-        if(strcmp(buffer, "Birdswift\n") == 0)
+        if(strcmp(buffer, "Birdswift\t") == 0)
         {
             response = "классно, как и моего создателя";
         }
