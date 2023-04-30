@@ -33,7 +33,7 @@ int main()
         close(clientSocket);
         return EXIT_FAILURE;
     }
-    cout << "Connected to server!" << endl;
+    cout << "Connected" << endl;
 
     char buffer[4] = {0,0,0,0};
     recv(clientSocket, buffer, BUFFER_SIZE, 0);
